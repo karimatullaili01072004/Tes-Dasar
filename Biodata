@@ -1,0 +1,78 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nama = htmlspecialchars($_POST['nama']);
+    $jurusan = htmlspecialchars($_POST['jurusan']);
+    $email = htmlspecialchars($_POST['email']);
+
+    echo "<h2>Hasil Biodata:</h2>";
+    echo "Nama: " . $nama . "<br>";
+    echo "Jurusan: " . $jurusan . "<br>";
+    echo "Email: " . $email . "<br>";
+} else {
+    echo "Akses tidak valid.";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Biodata</title>
+  <script>
+    function validateForm() {
+      var nama = document.forms["biodataForm"]["nama"].value;
+      var email = document.forms["biodataForm"]["email"].value;
+      var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+      if (nama.trim() === "") {
+        alert("Nama tidak boleh kosong!");
+        return false;
+      }
+
+      if (!email.match(emailPattern)) {
+        alert("Email tidak valid!");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</head>
+<body>
+  <h2>Form Biodata Mahasiswa</h2>
+  <form name="biodataForm" action="proses_biodata.php" method="post" onsubmit="return validateForm()">
+    <label for="nama">Nama:</label><br>
+    <input type="text" id="nama" name="nama"><br><br>
+
+    <label for="jurusan">Jurusan:</label><br>
+    <select id="jurusan" name="jurusan">
+      <option value="Informatika">Informatika</option>
+      <option value="Sistem Informasi">Sistem Informasi</option>
+      <option value="Teknik Komputer">Teknik Komputer</option>
+    </select><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="text" id="email" name="email"><br><br>
+
+    <input type="submit" value="Kirim">
+  </form>
+</body>
+</html>
+
+<?php
+// Cek apakah data dikirim via metode POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Ambil data dari form dan lakukan sanitasi
+    $nama = htmlspecialchars($_POST['nama']);
+    $jurusan = htmlspecialchars($_POST['jurusan']);
+    $email = htmlspecialchars($_POST['email']);
+
+    // Tampilkan hasil input
+    echo "<h2>Hasil Biodata:</h2>";
+    echo "<strong>Nama:</strong> " . $nama . "<br>";
+    echo "<strong>Jurusan:</strong> " . $jurusan . "<br>";
+    echo "<strong>Email:</strong> " . $email . "<br>";
+} else {
+    echo "Akses tidak valid. Silakan isi form terlebih dahulu.";
+}
+?>
